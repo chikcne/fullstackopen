@@ -1,0 +1,14 @@
+title FullStackOpen 0.6
+
+actor A
+A->browser: write a note in the form ("JS is hard")
+A->browser: click on the submit button
+browser-->browser: { content: "JS is hard", date: "2021-10-10" }
+note over browser
+the browser pushes the note object into
+the notes array and redraws the notes
+end note
+browser->A: display redrawn notes
+browser->server: HTTP POST /exampleapp/new_note_spa
+browser-->server: \"{ content: 'JS is hard', date: '2021-10-10' }\"
+server-->browser: {"message":"note created"}
