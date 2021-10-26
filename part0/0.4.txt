@@ -1,0 +1,24 @@
+title FullStackOpen 0.4
+
+actor A
+A->browser: write a note in the form ("CSS is okay")
+A->browser: click on the submit button
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+browser-->server: note: "CSS is okay"
+note over server:
+the server stores it as a note object,
+automatically adding a date attribute as well
+end note
+server->browser: 302 redirect /exampleapp/notes
+note over browser:
+the browser fetches the page again, making the same requests
+end note
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->browser: HTML-code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server-->browser: main.js
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: [..., { content: "CSS is okay", date: "2021-10-10" }]
